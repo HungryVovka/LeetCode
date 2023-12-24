@@ -40,6 +40,22 @@ class Solution:
         scores = list(map(lambda x: x[0].count("0") + x[1].count("1"), ways))
         return max(scores)
 
+# or
+
+class Solution:
+    def maxScore(self, s: str) -> int:
+        max_score, zero = 0, 0
+        one = s.count("1")
+        i = 0
+        while i < len(s) - 1:
+            if s[i] == "0":
+                zero += 1
+            elif s[i] == "1":
+                one -= 1
+            max_score = max(max_score, zero + one)
+            i += 1
+        return max_score
+
 # Tasks are the property of LeetCode (https://leetcode.com/) 
 # and users of this resource.
 # 
