@@ -21,7 +21,7 @@
 # Constraints:
 # 
 # 1 <= nums.length <= 2500
-# -104 <= nums[i] <= 104
+# -10^4 <= nums[i] <= 10^4
 
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
