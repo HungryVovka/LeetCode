@@ -22,7 +22,7 @@
 # Constraints:
 # 
 # The number of nodes in the tree is in the range [2, 5000].
-# 0 <= Node.val <= 105
+# 0 <= Node.val <= 10^5
 
 # Definition for a binary tree node.
 # class TreeNode:

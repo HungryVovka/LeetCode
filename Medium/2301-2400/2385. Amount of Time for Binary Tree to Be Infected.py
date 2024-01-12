@@ -28,8 +28,8 @@
 #  
 # Constraints:
 # 
-# The number of nodes in the tree is in the range [1, 105].
-# 1 <= Node.val <= 105
+# The number of nodes in the tree is in the range [1, 10^5].
+# 1 <= Node.val <= 10^5
 # Each node has a unique value.
 # A node with a value of start exists in the tree.
 
