@@ -31,7 +31,8 @@ class Solution:
         self.m = 0
         self.n = 0
 
-    def findPaths(self, m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
+    def findPaths(self, \
+        m: int, n: int, maxMove: int, startRow: int, startColumn: int) -> int:
         self.m = m
         self.n = n
         return self.dp(maxMove, startRow, startColumn)
@@ -43,8 +44,10 @@ class Solution:
             return 1
         if maxMove == 0:
             return 0
-        out_grid = (self.dp(maxMove - 1, row + 1, col) + self.dp(maxMove - 1, row - 1, col) +
-                    self.dp(maxMove - 1, row, col + 1) + self.dp(maxMove - 1, row, col - 1)) % self.mod
+        out_grid = (self.dp(maxMove - 1, row + 1, col) + \
+                    self.dp(maxMove - 1, row - 1, col) + \
+                    self.dp(maxMove - 1, row, col + 1) + \
+                    self.dp(maxMove - 1, row, col - 1)) % self.mod
         self.memo[(maxMove, row, col)] = out_grid
         return out_grid
 
