@@ -19,7 +19,7 @@
 # 
 # Constraints:
 # 
-# 1 <= temperatures.length <= 105
+# 1 <= temperatures.length <= 10^5
 # 30 <= temperatures[i] <= 100
 
 class Solution:
