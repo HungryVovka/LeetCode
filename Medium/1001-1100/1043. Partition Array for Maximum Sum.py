@@ -23,7 +23,7 @@
 # Constraints:
 # 
 # 1 <= arr.length <= 500
-# 0 <= arr[i] <= 109
+# 0 <= arr[i] <= 10^9
 # 1 <= k <= arr.length
 
 class Solution:
