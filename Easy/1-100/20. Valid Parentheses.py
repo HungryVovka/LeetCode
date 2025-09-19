@@ -44,6 +44,24 @@ class Solution:
                     return False
         return len(stack) == 0
 
+# or
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        brackets = {
+            ")" : "(",
+            "]" : "[",
+            "}" : "{"
+        }
+        for i in s:
+            if i in brackets.values():
+                stack.append(i)
+            elif i in brackets.keys():
+                if len(stack) == 0 or brackets[i] != stack.pop():
+                    return False
+        return not stack
+
 # Tasks are the property of LeetCode (https://leetcode.com/) 
 # and users of this resource.
 # 
