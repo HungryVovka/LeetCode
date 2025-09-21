@@ -30,6 +30,17 @@
 
 class Solution:
     def convertToTitle(self, columnNumber: int) -> str:
+        answer = []
+        while columnNumber > 0:
+            index = (columnNumber - 1) % 26
+            answer.append(chr(index + ord('A')))
+            columnNumber = (columnNumber - 1) // 26
+        return "".join(reversed(answer))
+
+# or
+
+class Solution:
+    def convertToTitle(self, columnNumber: int) -> str:
         if columnNumber == 0:
             return ""
         else:
