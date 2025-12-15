@@ -49,6 +49,33 @@ class Solution:
             l2 = l2.next if l2 else None
         return answer.next
 
+# or
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        tail = dummy
+        carry = 0
+        while l1 is not None or l2 is not None:
+            temp_sum = carry
+            if l1 is not None:
+                temp_sum += l1.val
+                l1 = l1.next
+            if l2 is not None:
+                temp_sum += l2.val
+                l2 = l2.next
+            carry = 1 if temp_sum >= 10 else 0
+            tail.next = ListNode(temp_sum - 10 if carry else temp_sum)
+            tail = tail.next
+        if carry:
+            tail.next = ListNode(1)
+        return dummy.next
+
 # Tasks are the property of LeetCode (https://leetcode.com/) 
 # and users of this resource.
 # 
