@@ -60,6 +60,111 @@ int* twoSum(int* numeri, int dimensione,
     return NULL;
 }
 
+// or
+
+#include <stdlib.h>         // malloc, free
+#include <stddef.h>         // size_t
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+
+#define HASH_SIZE 10007
+
+struct HashNode {
+    int value;
+    int index;
+    struct HashNode *next;
+};
+
+static size_t hashFunction(int value){
+    unsigned int uvalue;
+    uvalue = (unsigned int)value;
+    return (size_t)(uvalue % HASH_SIZE);
+}
+
+static struct HashNode* hashFind(struct HashNode **table, int value){
+    size_t bucket;
+    struct HashNode *current;
+    bucket = hashFunction(value);
+    current = table[bucket];
+    while (current != NULL){
+        if (current->value == value) return current;
+        current = current->next;
+    }
+    return NULL;
+}
+
+static int hashInsert(struct HashNode **table, int value, int index){
+    size_t bucket;
+    struct HashNode *node;
+    bucket = hashFunction(value);
+    node = (struct HashNode *)malloc(sizeof(struct HashNode));
+    if (node == NULL) return 0;
+
+    node->value = value;
+    node->index = index;
+    node->next = table[bucket];
+    table[bucket] = node;
+    return 1;
+}
+
+static void hashFree(struct HashNode **table){
+    size_t i;
+    struct HashNode *current;
+    struct HashNode *next;
+    for (i = 0; i < HASH_SIZE; i++){
+        current = table[i];
+        while (current != NULL){
+            next = current->next;
+            free(current);
+            current = next;
+        }
+        table[i] = NULL;
+    }
+}
+
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+    struct HashNode * hashTable[HASH_SIZE];
+    int i;
+    int needed;
+    struct HashNode *found;
+    int *result;
+
+    if (returnSize != NULL) *returnSize = 0;
+
+    if (nums == NULL || numsSize < 2 || returnSize == NULL){
+        return NULL;
+    }
+
+    for (i = 0; i < HASH_SIZE; i++){
+        hashTable[i] = NULL;
+    }
+
+    for (i = 0; i < numsSize; i++){
+        needed = target - nums[i];
+        found = hashFind(hashTable, needed);
+        if (found != NULL){
+            result = (int *)malloc(2 * sizeof(int));
+            if (result == NULL){
+                hashFree(hashTable);
+                return NULL;
+            }
+            result[0] = found->index;
+            result[1] = i;
+            *returnSize = 2;
+            hashFree(hashTable);
+            return result;
+        }
+        if (!hashInsert(hashTable, nums[i], i)){
+            hashFree(hashTable);
+            return NULL;
+        }
+    }
+    hashFree(hashTable);
+    return NULL;
+}
+
 // Tasks are the property of LeetCode (https://leetcode.com/) 
 // and users of this resource.
 // 
