@@ -28,7 +28,7 @@
 // It is guaranteed that the list represents a number that does not have leading zeros.
 
 #include <stdio.h>      // printf
-#include <stdlib.h>     // malloc, fre
+#include <stdlib.h>     // malloc, free
 
 /**
  * Definition for singly-linked list.
