@@ -39,35 +39,13 @@
 // 0 <= arr.length <= 1000
 // -10^9 <= arr[i] <= 10^9
 
-/**
- * @param {number[]} arr
- * @param {Function} fn
- * @return {number[]}
- */
-var filter = function(arr, fn) {
-    var answer = [];
-    arr.forEach((x, i) =>{
-        if (fn(x, i)){
-            answer.push(x);
-        }
+type Fn = (n: number, i: number) => any
+
+function filter(arr: number[], fn: Fn): number[] {
+    const answer: number[] = [];
+    arr.forEach((x, i) => {
+        if (fn(x, i)) answer.push(x);
     });
-    return answer;
-};
-
-// or
-
-/**
- * @param {number[]} arr
- * @param {Function} fn
- * @return {number[]}
- */
-var filter = function(arr, fn) {
-    var answer = [];
-    for (var i = 0; i < arr.length; i++){
-        if (fn(arr[i], i)){
-            answer.push(arr[i]);
-        }
-    }
     return answer;
 };
 
