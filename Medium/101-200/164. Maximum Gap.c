@@ -114,6 +114,73 @@ int maximumGap(int* nums, int numsSize){
     return maxGap;
 }
 
+// or
+
+#include <stdlib.h>         // malloc, free
+#include <stddef.h>         // size_t
+
+void radixSortLSD_u32(int *array, int n){
+    int *temp;
+    int count[256];
+    int prefix[256];
+    int pass;
+    int i;
+    int byteValue;
+    int shift;
+    int running;
+    int value;
+    int pos;
+    int *src;
+    int *dst;
+    int *swapPtr;
+
+    if (array == NULL || n <= 1) return;
+    temp = (int *)malloc((size_t)n * sizeof(int));
+    if (temp == NULL) return;
+    src = array;
+    dst = temp;
+
+    for (pass = 0; pass < 4; pass++){
+        shift = pass * 8;
+        for (i = 0; i < 256; i++) count[i] = 0;
+        for (i = 0; i < n; i++){
+            value = src[i];
+            byteValue = (value >> shift) & 255;
+            count[byteValue]++;
+        }
+        running = 0;
+        for (i = 0; i < 256; i++){
+            prefix[i] = running;
+            running += count[i];
+        }
+        for (i = 0; i < n; i++){
+            value = src[i];
+            byteValue = (value >> shift) & 255;
+            pos = prefix[byteValue];
+            dst[pos] = value;
+            prefix[byteValue] = pos + 1;
+        }
+        swapPtr = src;
+        src = dst;
+        dst = swapPtr;
+    }
+    free(temp);
+}
+
+int maximumGap(int *nums, int numsSize){
+    int maxGap;
+    int i;
+    int diff;
+    if (nums == NULL || numsSize < 2) return 0;
+    radixSortLSD_u32(nums, numsSize);
+    maxGap = 0;
+    for (i = 1; i < numsSize; i++){
+        diff = nums[i] - nums[i - 1];
+        if (diff > maxGap) maxGap = diff;
+    }
+    return maxGap;
+}
+
 // Tasks are the property of LeetCode (https://leetcode.com/) 
 // and users of this resource.
 // 
