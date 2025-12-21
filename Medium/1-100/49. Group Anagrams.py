@@ -35,6 +35,25 @@ class Solution:
                 anagrams_dict[i_sorted] = [i]
         return list(anagrams_dict.values())
 
+# or
+
+from typing import List
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        anagrams_dict = {}
+        for word in strs:
+            letter_freq = [0] * 26
+            for c in word:
+                letter_i = ord(c) - ord('a')
+                letter_freq[letter_i] += 1
+            freq_key = tuple(letter_freq)
+            if freq_key in anagrams_dict:
+                anagrams_dict[freq_key].append(word)
+            else:
+                anagrams_dict[freq_key] = [word]
+        return list(anagrams_dict.values())
+
 # Tasks are the property of LeetCode (https://leetcode.com/) 
 # and users of this resource.
 # 
