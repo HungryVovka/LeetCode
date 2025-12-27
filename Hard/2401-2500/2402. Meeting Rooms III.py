@@ -88,6 +88,40 @@ class Solution:
                 heapq.heappush(occupied, (new_start + (end - start), room_id))
         return max(count.items(), key=lambda x: x[1])[0]
 
+# or
+
+from typing import List
+import heapq
+
+class Solution:
+    def mostBooked(self, n: int, meetings: List[List[int]]) -> int:
+        meetings.sort()  # start is unique, sorting by start is enough
+        meetings_count = [0] * n
+        available_rooms = list(range(n))  # min room id first
+        heapq.heapify(available_rooms)
+        busy_rooms = []  # (end_time, room_id)
+        for start, end in meetings:
+            while busy_rooms and busy_rooms[0][0] <= start:
+                freed_end, freed_room = heapq.heappop(busy_rooms)
+                heapq.heappush(available_rooms, freed_room)
+
+            if available_rooms:
+                room_id = heapq.heappop(available_rooms)
+                meetings_count[room_id] += 1
+                heapq.heappush(busy_rooms, (end, room_id))
+            else:
+                earliest_end, room_id = heapq.heappop(busy_rooms)
+                duration = end - start
+                meetings_count[room_id] += 1
+                heapq.heappush(busy_rooms, (earliest_end + duration, room_id))
+        best_room = 0
+        best_count = meetings_count[0]
+        for room_id in range(1, n):
+            if meetings_count[room_id] > best_count:
+                best_count = meetings_count[room_id]
+                best_room = room_id
+        return best_room
+
 # Tasks are the property of LeetCode (https://leetcode.com/) 
 # and users of this resource.
 # 
